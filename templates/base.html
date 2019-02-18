@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        {% block head %}
+        <style type="text/css">
+            .header{
+                text-align: center;
+                background-color: rgb(136, 185, 229);
+                height: 70px;
+                line-height: 70px;
+            }
+            .content{
+                margin-top: 30px;
+                text-align: center;
+            }
+        </style>
+        <title>{% block title %}{% endblock %}</title>
+        {% endblock %}
+    </head>
+   <body>
+       {% block content %}{% endblock %}     
+   </body>
+   <footer>
+       {% block footer %}{% endblock %}     
+   </footer>
+
+</html>

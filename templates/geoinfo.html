@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+    <style type="text/css">
+    .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="header">
+    <h2>Geoinfo</h2>
+    </div>
+    <div id="content" class="content">
+        <b>IP:</b> {{ip_address}}<br/><b>City: </b>{{city}}<br/><b>Lat:</b> {{latitude}} <br/><b>Long: </b>{{longitude}}
+   </div>
+   <p class="important">
+{% endblock %}
