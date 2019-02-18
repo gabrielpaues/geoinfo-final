@@ -1,7 +1,7 @@
 # geoinfo
 Geoinfo demo for Kubernetes
 
-Input your variables in the plot.conf file.
+Input your variables in the plotvars.py file.
 
 Build and start the container:
 # sudo docker build --tag=geoinfo-0.1 . && sudo docker run -p 4000:80 geoinfo-0.1
