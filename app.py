@@ -8,8 +8,6 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import sys
 import json
-#import pandas as pd
-#import numpy as np
 import urllib
 import re
 import plotvars
@@ -52,7 +50,8 @@ def draw_plotly():
                 lon=[longitude],
                 mode='markers',
                 marker=dict(
-                size=14
+                size=30,
+                color='rgb(250, 105, 15)'
             ),
             text=['Current IP Location'],
                 )
@@ -61,6 +60,8 @@ def draw_plotly():
             layout = go.Layout(
                 autosize=True,
                 hovermode='closest',
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
                 mapbox=dict(
                     accesstoken=mapbox_access_token,
                     bearing=0,
@@ -76,7 +77,7 @@ def draw_plotly():
     ]
     # Add "ids" to each of the graphs to pass up to the client
     # for templating
-    ids = ['graph-{}'.format(i) for i, _ in enumerate(graphs)]
+    ids = ['Container position' for i, _ in enumerate(graphs)]
 
     # Convert the figures to JSON
     # PlotlyJSONEncoder appropriately converts pandas, datetime, etc
