@@ -86,6 +86,66 @@ def draw_plotly():
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
     return render_template('plotly.html', ids=ids, graphJSON=graphJSON)
 
+@app.route('/plotip/<ipaddress>')
+def draw_ip(ipaddress):
+    #Mapbox and Plotly stuff
+    mapbox_access_token = plotvars.mapbox_access_token
+    plotly.tools.set_credentials_file(username=plotvars.plotly_username, api_key=plotvars.plotly_apikey)
+    #ipinfo stuff
+    access_token = plotvars.ipinfo_access_token
+    handler = ipinfo.getHandler(access_token)
+    ip_address = ipaddress.encode('utf-8')
+    details = handler.getDetails(ip_address)
+
+ 
+    latitude = details.latitude
+    longitude = details.longitude
+
+    graphs = [
+        dict(
+            data = [
+                go.Scattermapbox(
+                lat=[latitude],
+                lon=[longitude],
+                mode='markers',
+                marker=dict(
+                size=30,
+                color='rgb(250, 105, 15)'
+            ),
+            text=['Current IP Location'],
+                )
+            ],
+
+            layout = go.Layout(
+                autosize=True,
+                hovermode='closest',
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
+                mapbox=dict(
+                    accesstoken=mapbox_access_token,
+                    bearing=0,
+                    center=dict(
+                        lat=int(round(float(latitude))),
+                        lon=int(round(float(longitude)))
+                    ),
+                    pitch=0,
+                    zoom=5
+                ),
+            )
+        )
+    ]
+    # Add "ids" to each of the graphs to pass up to the client
+    # for templating
+    ids = ['Container position' for i, _ in enumerate(graphs)]
+
+    # Convert the figures to JSON
+    # PlotlyJSONEncoder appropriately converts pandas, datetime, etc
+    # objects to their JSON equivalents
+    
+    graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
+    return render_template('plotly.html', ids=ids, graphJSON=graphJSON)
+
+
 @app.route('/geoinfo/<ipa>')
 def geoinfo(ipa):
     access_token = '8686afa12f5a73'
